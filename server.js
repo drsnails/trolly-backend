@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')));
 } else {
     const corsOptions = {
-        origin: [ 'http://127.0.0.1:3000', 'http://localhost:3000'],
+        origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
         credentials: true
     };
     app.use(cors(corsOptions));
@@ -36,11 +36,16 @@ const tripRoutes = require('./api/trip/trip.routes')
 const connectSockets = require('./api/socket/socket.routes')
 
 
+
 // routes
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
 app.use('/api/trip', tripRoutes)
+app.get('/api/apiKey', (req, res) => {
+    const API_KEY = 'AIzaSyA5YAKbctMWmj2etXv-KY7MSXDMGaWr0qs'
+    res.send(API_KEY)
+})
 connectSockets(io)
 
 const port = process.env.PORT || 3030;
